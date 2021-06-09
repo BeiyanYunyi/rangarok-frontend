@@ -1,0 +1,36 @@
+import { v4 as uuid } from "uuid";
+import listofStudents, {
+  ItemofStudentsType,
+  PlaceType,
+  RoomType,
+} from "../data/listofStudents";
+
+const generateStuDB = () => {
+  const stuDB: Array<{
+    id: string;
+    name: string;
+    roomCode: number;
+    buildingName: string;
+    groupName: string;
+    signDate: string;
+  }> = [];
+  listofStudents.forEach((group: ItemofStudentsType) => {
+    group.places.forEach((place: PlaceType) => {
+      place.rooms.forEach((room: RoomType) => {
+        room.peoples.forEach((people) => {
+          stuDB.push({
+            id: uuid(),
+            name: people,
+            roomCode: room.code,
+            buildingName: place.name,
+            groupName: group.name,
+            signDate: "",
+          });
+        });
+      });
+    });
+  });
+  console.log(JSON.stringify(stuDB));
+};
+
+export default generateStuDB;
